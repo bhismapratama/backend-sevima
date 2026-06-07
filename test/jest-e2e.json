@@ -1,0 +1,20 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "..",
+  "testEnvironment": "node",
+  "testRegex": "test/.*.e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": ["ts-jest", {"tsconfig": "<rootDir>/test/tsconfig.json"}]
+  },
+  "moduleNameMapper": {
+    "^auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^common/(.*)$": "<rootDir>/src/common/$1",
+    "^infra/(.*)$": "<rootDir>/src/infra/$1",
+    "^tenant/(.*)$": "<rootDir>/src/tenant/$1",
+    "^workflow/(.*)$": "<rootDir>/src/workflow/$1",
+    "^execution/(.*)$": "<rootDir>/src/execution/$1",
+    "^trigger/(.*)$": "<rootDir>/src/trigger/$1",
+    "^ai/(.*)$": "<rootDir>/src/ai/$1"
+  },
+  "testTimeout": 30000
+}
