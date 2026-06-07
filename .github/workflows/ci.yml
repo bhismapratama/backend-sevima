@@ -46,7 +46,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
-      - run: pnpm test -- --no-coverage --forceExit
+      - run: pnpm exec jest --forceExit
 
   e2e-test:
     name: E2E Tests
@@ -100,7 +100,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
       - run: npx prisma migrate deploy
-      - run: pnpm test:e2e -- --forceExit
+      - run: pnpm test:e2e
 
   security-scan:
     name: Security Scan
