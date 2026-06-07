@@ -1,6 +1,13 @@
 import {ApiPropertyOptional} from '@nestjs/swagger';
 import {WorkflowRole} from '@prisma/client';
-import {IsEmail, IsEnum, IsOptional, IsString, MinLength, Matches} from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  MinLength,
+  Matches,
+} from 'class-validator';
 
 export class UpdateMemberDto {
   @ApiPropertyOptional({example: 'newemail@acme.com'})

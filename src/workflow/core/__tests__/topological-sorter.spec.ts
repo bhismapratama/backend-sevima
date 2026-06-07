@@ -50,6 +50,6 @@ describe('topologicalSort', () => {
         { id: 'b', name: 'B', type: 'DELAY', config: { delayMs: 0 }, dependsOn: ['a'] },
       ],
     };
-    expect(() => topologicalSort(parseDag(def))).toThrow(/[Cc]ycle/);
+    expect(() => topologicalSort(parseDag(def))).toThrow(/[Cc]ycle|[Ss]iklus/);
   });
 });

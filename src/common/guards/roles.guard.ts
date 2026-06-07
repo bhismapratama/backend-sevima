@@ -24,7 +24,8 @@ export class RolesGuard implements CanActivate {
       .switchToHttp()
       .getRequest<{user?: {role: WorkflowRole}}>();
 
-    if (!user) throw new ForbiddenException('Tidak ada pengguna yang terautentikasi');
+    if (!user)
+      throw new ForbiddenException('Tidak ada pengguna yang terautentikasi');
 
     if (!required.includes(user.role)) {
       throw new ForbiddenException(

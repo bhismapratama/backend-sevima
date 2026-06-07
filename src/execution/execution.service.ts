@@ -97,7 +97,8 @@ export class ExecutionService {
         triggeredBy: {select: {id: true, email: true}},
       },
     });
-    if (!execution) throw new NotFoundException(`Eksekusi ${id} tidak ditemukan`);
+    if (!execution)
+      throw new NotFoundException(`Eksekusi ${id} tidak ditemukan`);
     return execution;
   }
 

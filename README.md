@@ -103,21 +103,29 @@ This starts the API, PostgreSQL, and Redis together with health-check ordering.
 
 ### Environment Variables
 
-| Variable         | Default     | Required |
-| ---------------- | ----------- | -------- |
-| `DATABASE_URL`   | -           | Yes      |
-| `JWT_SECRET`     | -           | Yes      |
-| `JWT_EXPIRES_IN` | `7d`        | No       |
-| `REDIS_HOST`     | `localhost` | No       |
-| `REDIS_PORT`     | `6379`      | No       |
+| Variable            | Default     | Required |
+| ------------------- | ----------- | -------- |
+| `DATABASE_URL`      | -           | Yes      |
+| `JWT_SECRET`        | -           | Yes      |
+| `JWT_EXPIRES_IN`    | `7d`        | No       |
+| `REDIS_HOST`        | `localhost` | No       |
+| `REDIS_PORT`        | `6379`      | No       |
+| `ANTHROPIC_API_KEY` | -           | No       |
+| `CORS_ORIGIN`       | -           | No       |
 
 ## API Reference
 
 ### Auth
 
 ```
-POST /auth/register   { email, password, tenantSlug }
-POST /auth/login      { email, password }  → { accessToken }
+POST   /auth/register              { tenantName, tenantSlug, email, password, role? }
+POST   /auth/login                 { email, password }  → { accessToken }
+GET    /auth/me                    Current user profile (authenticated)
+PATCH  /auth/me                    { email?, password? } Update own profile
+GET    /auth/members               List tenant members (ADMIN)
+POST   /auth/members               { email, password, role? } Add member (ADMIN)
+PATCH  /auth/members/:userId       { email?, role?, password? } Edit member (ADMIN)
+DELETE /auth/members/:userId       Remove member (ADMIN)
 ```
 
 All other endpoints require `Authorization: Bearer <token>`.

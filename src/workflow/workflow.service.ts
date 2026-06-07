@@ -99,7 +99,8 @@ export class WorkflowService {
         triggers: {where: {isActive: true}},
       },
     });
-    if (!workflow) throw new NotFoundException(`Workflow ${id} tidak ditemukan`);
+    if (!workflow)
+      throw new NotFoundException(`Workflow ${id} tidak ditemukan`);
     return workflow;
   }
 

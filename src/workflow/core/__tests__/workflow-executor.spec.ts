@@ -78,7 +78,7 @@ describe('WorkflowExecutor', () => {
   it('rejects an invalid DAG (no steps)', async () => {
     const def: WorkflowDefinition = { steps: [] };
     const executor = new WorkflowExecutor();
-    await expect(executor.execute(def, makeCtx())).rejects.toThrow(/Invalid workflow/);
+    await expect(executor.execute(def, makeCtx())).rejects.toThrow(/Invalid workflow|tidak valid/);
   });
 
   it('times out a workflow that exceeds timeoutMs', async () => {

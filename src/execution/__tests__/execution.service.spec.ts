@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getQueueToken } from '@nestjs/bull';
 import { ExecutionService } from '../execution.service';
 import { PrismaService } from 'infra/database/prisma.service';
+import { REDIS_CLIENT } from 'infra/redis/redis.module';
 
 const mockWorkflow = {
   id: 'wf-1',
@@ -52,6 +53,7 @@ describe('ExecutionService', () => {
         ExecutionService,
         { provide: PrismaService, useValue: prisma },
         { provide: getQueueToken('execution'), useValue: queue },
+        { provide: REDIS_CLIENT, useValue: { del: jest.fn() } },
       ],
     }).compile();
 
@@ -72,7 +74,7 @@ describe('ExecutionService', () => {
         }),
       );
       expect(queue.add).toHaveBeenCalledWith('run', expect.objectContaining({ executionId: 'exec-1' }));
-      expect(result.id).toBe('exec-1');
+      expect(result.executionId).toBe('exec-1');
     });
 
     it('throws NotFoundException when workflow not found', async () => {

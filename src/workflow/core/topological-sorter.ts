@@ -31,7 +31,9 @@ export function topologicalSort(graph: DagGraph): string[][] {
 
   if (visited.size !== graph.steps.size) {
     const unvisited = [...graph.steps.keys()].filter((id) => !visited.has(id));
-    throw new Error(`Siklus terdeteksi melibatkan langkah: ${unvisited.join(', ')}`);
+    throw new Error(
+      `Siklus terdeteksi melibatkan langkah: ${unvisited.join(', ')}`,
+    );
   }
 
   return layers;

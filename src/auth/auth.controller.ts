@@ -1,4 +1,13 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post, UseGuards} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
 import {ThrottlerGuard} from '@nestjs/throttler';
@@ -9,7 +18,13 @@ import {RolesGuard} from 'common/guards/roles.guard';
 import {Roles} from 'common/decorators/roles.decorator';
 import {WorkflowRole} from '@prisma/client';
 import {AuthService} from './auth.service';
-import {LoginDto, RegisterDto, AddMemberDto, UpdateMemberDto, UpdateProfileDto} from './dto';
+import {
+  LoginDto,
+  RegisterDto,
+  AddMemberDto,
+  UpdateMemberDto,
+  UpdateProfileDto,
+} from './dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -67,14 +82,20 @@ export class AuthController {
   @UseGuards(JwtGuard, RolesGuard, ThrottlerGuard)
   @ApiBearerAuth()
   @Roles(WorkflowRole.ADMIN)
-  removeMember(@CurrentUser() user: AuthenticatedUser, @Param('userId') userId: string) {
+  removeMember(
+    @CurrentUser() user: AuthenticatedUser,
+    @Param('userId') userId: string,
+  ) {
     return this.authService.removeMember(user.tenantId, userId, user.id);
   }
 
   @Patch('me')
   @UseGuards(JwtGuard, ThrottlerGuard)
   @ApiBearerAuth()
-  updateProfile(@CurrentUser() user: AuthenticatedUser, @Body() dto: UpdateProfileDto) {
+  updateProfile(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() dto: UpdateProfileDto,
+  ) {
     return this.authService.updateProfile(user.id, dto);
   }
 }

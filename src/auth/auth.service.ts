@@ -7,7 +7,13 @@ import {JwtService} from '@nestjs/jwt';
 import {WorkflowRole} from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import {PrismaService} from 'infra/database/prisma.service';
-import {LoginDto, RegisterDto, AddMemberDto, UpdateMemberDto, UpdateProfileDto} from './dto';
+import {
+  LoginDto,
+  RegisterDto,
+  AddMemberDto,
+  UpdateMemberDto,
+  UpdateProfileDto,
+} from './dto';
 
 @Injectable()
 export class AuthService {
@@ -75,7 +81,9 @@ export class AuthService {
       where: {email: dto.email, tenantId},
     });
     if (existing)
-      throw new ConflictException('Pengguna dengan email ini sudah ada di ruang kerja');
+      throw new ConflictException(
+        'Pengguna dengan email ini sudah ada di ruang kerja',
+      );
 
     const passwordHash = await bcrypt.hash(dto.password, 12);
 
@@ -104,7 +112,9 @@ export class AuthService {
     if (userId === requesterId)
       throw new ConflictException('Tidak dapat menghapus akun Anda sendiri');
 
-    const user = await this.prisma.user.findFirst({where: {id: userId, tenantId}});
+    const user = await this.prisma.user.findFirst({
+      where: {id: userId, tenantId},
+    });
     if (!user) throw new ConflictException('Pengguna tidak ditemukan');
 
     await this.prisma.user.delete({where: {id: userId}});
@@ -112,7 +122,9 @@ export class AuthService {
   }
 
   async updateMember(tenantId: string, userId: string, dto: UpdateMemberDto) {
-    const user = await this.prisma.user.findFirst({where: {id: userId, tenantId}});
+    const user = await this.prisma.user.findFirst({
+      where: {id: userId, tenantId},
+    });
     if (!user) throw new ConflictException('Pengguna tidak ditemukan');
 
     if (dto.email) {

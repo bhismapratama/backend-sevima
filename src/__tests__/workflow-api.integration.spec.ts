@@ -225,7 +225,7 @@ describe('Workflow API (integration)', () => {
         .send({})
         .expect(202);
 
-      const executionId = (res.body.data as {id: string}).id;
+      const executionId = (res.body.data as {executionId: string}).executionId;
       expect(executionId).toBeDefined();
     });
   });

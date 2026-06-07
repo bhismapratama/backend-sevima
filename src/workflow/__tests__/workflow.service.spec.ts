@@ -2,6 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { WorkflowService } from '../workflow.service';
 import { PrismaService } from 'infra/database/prisma.service';
+import { REDIS_CLIENT } from 'infra/redis/redis.module';
 
 const VALID_DAG = {
   steps: [
@@ -52,6 +53,7 @@ describe('WorkflowService', () => {
       providers: [
         WorkflowService,
         { provide: PrismaService, useValue: prisma },
+        { provide: REDIS_CLIENT, useValue: { del: jest.fn() } },
       ],
     }).compile();
 

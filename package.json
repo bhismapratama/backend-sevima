@@ -114,7 +114,8 @@
       "^workflow/(.*)$": "<rootDir>/workflow/$1",
       "^execution/(.*)$": "<rootDir>/execution/$1",
       "^trigger/(.*)$": "<rootDir>/trigger/$1",
-      "^ai/(.*)$": "<rootDir>/ai/$1"
+      "^ai/(.*)$": "<rootDir>/ai/$1",
+      "^health/(.*)$": "<rootDir>/health/$1"
     }
   }
 }

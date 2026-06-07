@@ -188,7 +188,9 @@ export class TriggerService implements OnModuleInit {
       where: {nonce},
     });
     if (existingNonce)
-      throw new ConflictException('Nonce duplikat - serangan putar ulang terdeteksi');
+      throw new ConflictException(
+        'Nonce duplikat - serangan putar ulang terdeteksi',
+      );
 
     await this.prisma.webhookNonce.create({
       data: {nonce, expiresAt: new Date(Date.now() + 5 * 60 * 1000)},

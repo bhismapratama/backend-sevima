@@ -107,7 +107,9 @@ export class WorkflowExecutor {
             stepName: step.name,
             status: 'failed',
             attempt: 1,
-            error: isTimeout ? 'Workflow batas waktu terlampaui' : 'Workflow dibatalkan',
+            error: isTimeout
+              ? 'Workflow batas waktu terlampaui'
+              : 'Workflow dibatalkan',
             logs: [],
           });
         }
