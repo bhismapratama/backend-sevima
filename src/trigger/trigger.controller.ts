@@ -58,4 +58,11 @@ export class TriggerController {
   remove(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
     return this.triggerService.deleteTrigger(user.tenantId, id);
   }
+
+  @Post(':id/test')
+  @HttpCode(202)
+  @Roles(WorkflowRole.ADMIN, WorkflowRole.EDITOR)
+  test(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    return this.triggerService.testWebhook(user.tenantId, id);
+  }
 }

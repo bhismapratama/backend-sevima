@@ -95,7 +95,7 @@ export class WorkflowController {
 
   @Post(':id/execute')
   @HttpCode(202)
-  @Roles(WorkflowRole.ADMIN, WorkflowRole.EDITOR)
+  @Roles(WorkflowRole.ADMIN, WorkflowRole.EDITOR, WorkflowRole.VIEWER)
   execute(
     @CurrentUser() user: AuthenticatedUser,
     @Param('id') id: string,

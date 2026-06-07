@@ -216,6 +216,40 @@ export class TriggerService implements OnModuleInit {
     this.cronTasks.set(trigger.id, task);
   }
 
+  async testWebhook(tenantId: string, triggerId: string) {
+    const trigger = await this.findTriggerOwnedByTenant(tenantId, triggerId);
+
+    if (trigger.type !== 'WEBHOOK') {
+      throw new BadRequestException('Hanya webhook yang dapat ditest');
+    }
+
+    if (!trigger.webhookPath || !trigger.webhookSecret) {
+      throw new BadRequestException('Konfigurasi webhook tidak lengkap');
+    }
+
+    // Generate test payload
+    const testPayload = {
+      test: true,
+      timestamp: new Date().toISOString(),
+    };
+
+    // Generate signature
+    const signature = createHmac('sha256', trigger.webhookSecret)
+      .update(JSON.stringify(testPayload))
+      .digest('hex');
+
+    // Generate nonce
+    const nonce = randomUUID();
+
+    // Call webhook internally
+    return this.verifyAndHandleWebhook(
+      trigger.webhookPath,
+      testPayload,
+      signature,
+      nonce,
+    );
+  }
+
   private async findTriggerOwnedByTenant(tenantId: string, triggerId: string) {
     const trigger = await this.prisma.workflowTrigger.findFirst({
       where: {
