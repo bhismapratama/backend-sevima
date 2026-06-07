@@ -11,7 +11,7 @@ import {WorkflowModule} from 'workflow/workflow.module';
 import {ExecutionModule} from 'execution/execution.module';
 import {TriggerModule} from 'trigger/trigger.module';
 import {AiModule} from 'ai/ai.module';
-import {HealthModule} from 'health/health.module';
+import {HealthModule} from './health/health.module';
 import {ResponseInterceptor} from 'common/interceptors';
 
 @Module({

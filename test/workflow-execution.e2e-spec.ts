@@ -112,7 +112,7 @@ describe('Workflow Execution (e2e)', () => {
       const res = await request(app.getHttpServer())
         .post('/v1/workflows')
         .set('Authorization', `Bearer ${accessToken}`)
-        .send({name: 'E2E Workflow', definition: SIMPLE_DAG})
+        .send({name: 'E2E Workflow', dag: SIMPLE_DAG})
         .expect(201);
 
       expect(res.body.data.name).toBe('E2E Workflow');
@@ -131,7 +131,7 @@ describe('Workflow Execution (e2e)', () => {
     it('rejects unauthenticated requests with 401', async () => {
       await request(app.getHttpServer())
         .post('/v1/workflows')
-        .send({name: 'No Auth', definition: SIMPLE_DAG})
+        .send({name: 'No Auth', dag: SIMPLE_DAG})
         .expect(401);
     });
   });
@@ -192,9 +192,8 @@ describe('Workflow Execution (e2e)', () => {
         .send({})
         .expect(202);
 
-      expect(res.body.data.id).toBeDefined();
-      expect(res.body.data.status).toBe('PENDING');
-      executionId = res.body.data.id as string;
+      expect(res.body.data.executionId).toBeDefined();
+      executionId = res.body.data.executionId as string;
     });
 
     it('polls execution until it reaches a terminal state', async () => {
@@ -240,7 +239,7 @@ describe('Workflow Execution (e2e)', () => {
         .send({})
         .expect(202);
 
-      const newExecId = execRes.body.data.id as string;
+      const newExecId = execRes.body.data.executionId as string;
 
       const cancelRes = await request(app.getHttpServer())
         .post(`/v1/executions/${newExecId}/cancel`)

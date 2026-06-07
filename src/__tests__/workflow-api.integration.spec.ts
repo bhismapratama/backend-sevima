@@ -46,8 +46,6 @@ describe('Workflow API (integration)', () => {
   let workflowId: string;
 
   beforeAll(async () => {
-    prisma = new PrismaClient();
-
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -63,6 +61,8 @@ describe('Workflow API (integration)', () => {
     );
     await app.init();
     httpServer = app.getHttpServer() as Server;
+
+    prisma = new PrismaClient();
 
     const slug = `test-${uid()}`;
     const res = await request(httpServer)
@@ -97,10 +97,11 @@ describe('Workflow API (integration)', () => {
 
   afterAll(async () => {
     if (tenantId) {
-      await prisma?.tenant.delete({where: {id: tenantId}}).catch(() => {});
+      await prisma.tenant.delete({where: {id: tenantId}}).catch(() => {
+      });
     }
-    await prisma?.$disconnect();
-    await app?.close();
+    await prisma.$disconnect();
+    await app.close();
   });
 
   describe('POST /api/workflows', () => {
