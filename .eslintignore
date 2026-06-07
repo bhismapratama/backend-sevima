@@ -1,0 +1,7 @@
+coverage
+node_modules
+dist
+**.md
+**.spec.ts
+**.test.ts
+docker/volumes
